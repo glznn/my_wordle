@@ -1,0 +1,44 @@
+.Row {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.row__letters {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.row__letter {
+    padding: 4px;
+}
+
+.row__input {
+    margin: 0px;
+    padding: 0px;
+
+    height: 50px;
+    width: 50px;
+
+    text-align: center;
+    font-size: 40px;
+
+    background:none;
+    border: 2px solid red;
+    outline: none;
+    caret-color: transparent;
+
+}
+
+.row__input:hover {
+    cursor: pointer;
+}
+
+.square {
+    border: 2px solid gray; 
+    height: 50px;
+    width: 50px;
+}
