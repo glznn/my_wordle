@@ -28,6 +28,8 @@
 .app__keyboard {
     display: flex;
     position: relative;
+    align-items: center;
+    justify-content: center;
     height: 30vh;
     width: 40vw;
 
