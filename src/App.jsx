@@ -14,7 +14,7 @@ function App() {
           <h1>Glenn's Wordle App</h1>
         </div>
         <div className="app__guesses">
-          <Row />
+          <Row order={0} />
           <Row />
           <Row />
           <Row />
