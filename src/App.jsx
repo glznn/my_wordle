@@ -6,6 +6,7 @@ import './App.css';
 function App() {
 
   const [count, setCount] = useState(0);
+  const answer = 'crane';
 
   return (
     <>
@@ -14,12 +15,12 @@ function App() {
           <h1>Glenn's Wordle App</h1>
         </div>
         <div className="app__guesses">
-          <Row order={0} />
-          <Row />
-          <Row />
-          <Row />
-          <Row />
-          <Row />
+          <Row word={answer} order={0} />
+          <Row word={answer} />
+          <Row word={answer} />
+          <Row word={answer} />
+          <Row word={answer} />
+          <Row word={answer} />
         </div>
         <div className="app__keyboard">
           <Keyboard />

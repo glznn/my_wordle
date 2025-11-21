@@ -1,28 +1,30 @@
 import React, {useState, useRef} from 'react'
 import './Row.css'
 
-function Row({order}) {
+function Row({word, order}) {
 
   const [letters, setLetters] = useState(Array(5).fill(""));
   const inputsRef = useRef([]);
+  const wordSlice = word.split("");
 
   const handleKeyDown = (event, index) => {
-    if (event.key === 'Backspace' || event.key === 'ArrowLeft') {
-      inputsRef.current[index - 1].focus();
+    if (event.key === 'Backspace') { 
+      handleChange(event.key, index);
+      if (letters[index] === '') {
+        inputsRef.current[index - 1].focus();
+      }
     }
-    else if (event.key === 'ArrowRight') {
-      inputsRef.current[index + 1].focus();
-    }
-    else if (/^[A-Za-z]?$/.test(event.key)) {
-      const newLetters = [...letters];
-      newLetters[index] = event.key.toUpperCase();
-      setLetters(newLetters);
+    else {
+      handleChange(event.key, index);
     }
   }
-  
+
   const handleChange = (value, index) => {
-    if (/^[A-Za-z]?$/.test(value)) {
+    if (/^[A-Za-z]?$/.test(value) || value === 'Backspace') {
       const newLetters = [...letters];
+      if (value === 'Backspace') {
+        value = '';
+      }
       newLetters[index] = value.toUpperCase();
       setLetters(newLetters);
 
@@ -43,8 +45,8 @@ function Row({order}) {
               type="text" 
               maxLength={1}
               value={letter}
+              // onChange={(e) => handleChange(e.target.value, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
-              onChange={(e) => handleChange(e.target.value, i)}
               autoFocus={i === 0 && order === 0}
               />
             </div>
