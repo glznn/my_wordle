@@ -10,7 +10,11 @@ function App() {
 
   return (
     <>
-      <div className="App">
+      <div className="App"
+        onMouseDown={(e) => {
+        e.preventDefault();
+        }}
+      >
         <div className="app__header">
           <h1>Glenn's Wordle App</h1>
         </div>
