@@ -3,7 +3,11 @@ import './Key.css'
 
 function Key({ letter }) {
   return (
-    <div className="Key">
+    <div className="Key"
+    onClick={() => 
+        document.activeElement.value = letter.toUpperCase()
+      }
+    >
         {letter.toUpperCase()}
     </div>
   )

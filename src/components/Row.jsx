@@ -24,6 +24,8 @@ function Row({word, order}) {
       const newLetters = [...letters];
       if (value === 'Backspace') {
         value = '';
+        inputsRef.current[index - 1].focus();
+
       }
       newLetters[index] = value.toUpperCase();
       setLetters(newLetters);
