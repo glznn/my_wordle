@@ -10,7 +10,7 @@ function Row({word, order, inputs, registerHandler}) {
     if (registerHandler) {
       registerHandler(handleLetterClick);
     }
-  }, [])
+  }, [letters])
 
   const handleLetterClick = (letter) => {
     if (focusedIndex < 5) {
@@ -45,6 +45,7 @@ function Row({word, order, inputs, registerHandler}) {
 
     if (index < 4) {
       inputs.current[index + 1].focus();
+      console.log("reached");
     }
   }
 
