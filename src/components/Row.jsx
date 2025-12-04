@@ -1,38 +1,50 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useEffect} from 'react'
 import './Row.css'
 
-function Row({word, order}) {
+function Row({word, order, inputs, registerHandler}) {
 
   const [letters, setLetters] = useState(Array(5).fill(""));
-  const inputsRef = useRef([]);
-  const wordSlice = word.split("");
+  const [focusedIndex, setFocusedIndex] = useState(0);
 
-  const handleKeyDown = (event, index) => {
-    if (event.key === 'Backspace') { 
-      handleChange(event.key, index);
-      if (letters[index] === '') {
-        inputsRef.current[index - 1].focus();
-      }
+  useEffect(() => {
+    if (registerHandler) {
+      registerHandler(handleLetterClick);
     }
-    else {
-      handleChange(event.key, index);
+  }, [])
+
+  const handleLetterClick = (letter) => {
+    if (focusedIndex < 5) {
+      handleChange(letter, focusedIndex);
     }
   }
 
-  const handleChange = (value, index) => {
-    if (/^[A-Za-z]?$/.test(value) || value === 'Backspace') {
-      const newLetters = [...letters];
-      if (value === 'Backspace') {
-        value = '';
-        inputsRef.current[index - 1].focus();
+  const handleKeyDown = (event, index) => {
+    if (event.key === 'Backspace') {
+      event.preventDefault(); 
+      handleChange("", index, true);
+    }
+    else if (/^[A-Za-z]$/.test(event.key)) {
+      event.preventDefault();
+      handleChange(event.key.toUpperCase(), index, false);
+    }
+  }
 
-      }
-      newLetters[index] = value.toUpperCase();
+  const handleChange = (value, index, isBackspace = false) => {
+    const newLetters = [...letters];
+    
+    if (isBackspace) {
+      newLetters[index] = "";
       setLetters(newLetters);
-
-      if (value && index < letters.length - 1) {
-        inputsRef.current[index + 1].focus();
+      if (index > 0) {
+        inputs.current[index - 1].focus();
       }
+      return;
+    }
+    newLetters[index] = value;
+    setLetters(newLetters);
+
+    if (index < 4) {
+      inputs.current[index + 1].focus();
     }
   }
 
@@ -43,12 +55,12 @@ function Row({word, order}) {
           <div key={i} className="row__letter">
             <div className="square">
               <input className="row__input"
-              ref={(el) => inputsRef.current[i] = el}
+              ref={(el) => inputs.current[i] = el}
               type="text" 
               maxLength={1}
               value={letter}
-              // onChange={(e) => handleChange(e.target.value, i)}
               onKeyDown={(e) => handleKeyDown(e, i)}
+              onFocus={() => setFocusedIndex(i)}
               autoFocus={i === 0 && order === 0}
               />
             </div>

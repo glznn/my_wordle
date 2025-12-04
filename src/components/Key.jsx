@@ -1,13 +1,9 @@
 import React from 'react'
 import './Key.css'
 
-function Key({ letter }) {
+function Key({ letter, onClick  }) {
   return (
-    <div className="Key"
-    onClick={() => 
-        document.activeElement.value = letter.toUpperCase()
-      }
-    >
+    <div className="Key" onClick={() => onClick(letter)}>
         {letter.toUpperCase()}
     </div>
   )

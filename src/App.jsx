@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Row from './components/Row.jsx';
 import Keyboard from './components/Keyboard.jsx';
 import './App.css';
@@ -6,6 +6,24 @@ import './App.css';
 function App() {
 
   const [count, setCount] = useState(0);
+
+  const [activeRow, setActiveRow] = useState(0);
+
+  // Makes of array of arrays, 6 row, 5 letters
+  // Tracks current focus position
+  const inputsRef = useRef(
+    Array.from({length: 6}, () => Array(5).fill(null))
+  );
+
+  const rowHandlers = useRef([]);
+
+  const handleKeyPress = (letter) => {
+    const handler = rowHandlers.current[activeRow];
+    if (handler) {
+      handler(letter);
+    }
+  }
+
   const answer = 'crane';
 
   return (
@@ -19,15 +37,18 @@ function App() {
           <h1>Glenn's Wordle App</h1>
         </div>
         <div className="app__guesses">
-          <Row word={answer} order={0} />
-          <Row word={answer} />
-          <Row word={answer} />
-          <Row word={answer} />
-          <Row word={answer} />
-          <Row word={answer} />
+          {inputsRef.current.map((rowRefs, rowIndex) => (
+            <Row
+              key={rowIndex}
+              word={answer}
+              order={rowIndex}
+              inputs={{current: rowRefs}}
+              registerHandler={(fn) => (rowHandlers.current[rowIndex] = fn)}
+            />
+          ))}
         </div>
         <div className="app__keyboard">
-          <Keyboard />
+          <Keyboard onKeyPress={handleKeyPress}/>
         </div>
       </div>
         <button onClick={() => setCount((count) => count + 1)}>
