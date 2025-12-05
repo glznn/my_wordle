@@ -24,6 +24,12 @@ function App() {
     }
   }
 
+const handleEnter = (event) => {
+  if (event.key === 'Enter') {
+    console.log("Enter key was pressed");
+  }
+}
+
   const answer = 'crane';
 
   return (
@@ -44,6 +50,7 @@ function App() {
               order={rowIndex}
               inputs={{current: rowRefs}}
               registerHandler={(fn) => (rowHandlers.current[rowIndex] = fn)}
+              onKeyPress={handleEnter}
             />
           ))}
         </div>
